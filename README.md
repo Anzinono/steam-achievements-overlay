@@ -11,5 +11,3 @@ You are welcome to customize the HTML yourself and make suggestions.
 
 Browser Source, URL for OBS: http://localhost:3000
 Change the const of the "port" if you have already assigned 3000.
-
-Translated with DeepL.com (free version)
