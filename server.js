@@ -63,6 +63,7 @@ app.get('/api/missing-achievements', async (req, res) => {
             }
         }
         */
+       
         // Nur fehlende Erfolge
         const missing = playerAchievements
             .filter(a => a.achieved === 0)
