@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Steam Erfolge Overlay</title>
+  <style>
+    body {
+      background: transparent;
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+
+    .erfolg {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      max-width: 800px;
+    }
+
+    .erfolg img {
+      width: 64px;
+      height: 64px;
+      margin-right: 15px;
+    }
+
+    .textblock {
+      color: white;
+      text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+    }
+
+    .titel {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .beschreibung {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div id="erfolge"></div>
+
+  <script>
+    async function ladeErfolge() {
+      const res = await fetch('/api/missing-achievements');
+      const daten = await res.json();
+      const container = document.getElementById('erfolge');
+
+      container.innerHTML = daten.map(e => `
+        <div class="erfolg">
+          <img src="${e.icon}" />
+          <div class="textblock">
+            <div class="titel">${e.displayName}</div>
+            <div class="beschreibung">${e.description}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    ladeErfolge();
+    setInterval(ladeErfolge, 60 * 1000); // Alle 60 Sekunden aktualisieren
+  </script>
+</body>
+</html>
