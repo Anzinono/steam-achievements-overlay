@@ -1,10 +1,8 @@
-If you want to use it yourself, you have to enter your Steam64ID, your SteamAPIKey and the game id in “.env”.
+If you want to use it yourself, you have to enter your Steam64ID, gamId in “.env”.
 
 To find your ID use the following pages.
 
 Steam64ID: https://steamid.io
-
-SteamAPIKey: https://steamcommunity.com/dev/apikey
 
 Game ID: Go Steam Shop site -> "https://store.steampowered.com/app/GAME_ID/GAME_NAME/".
 
