@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config(); // .env-Datei laden
 const express = require('express');
 const axios = require('axios');
 const app = express();
@@ -38,7 +38,7 @@ app.get('/api/missing-achievements', async (req, res) => {
                 const full = gameAchievements.find(g => g.name === a.apiname);
                 return {
                     apiname: a.apiname,
-                  displayName: full?.displayName || a.apiname,
+                    displayName: full?.displayName || a.apiname,
                     description: full?.description || '',
                     icon: full?.icon,
                 };
