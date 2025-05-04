@@ -3,6 +3,7 @@ const express = require('express'); // Framework für den Server
 const axios = require('axios'); // HTTP-Client für API-Anfragen
 const app = express();
 const PORT = 3000;
+// STEAM API DOKU: https://developer.valvesoftware.com/wiki/Steam_Web_API#GetPlayerSummaries_(v0002)
 
 app.use(express.static('public')); // Übergibt statische Dateien aus dem 'public'-Verzeichnis
 
