@@ -6,20 +6,43 @@
     <title>Steam Erfolge Overlay</title>
     <style>
         body {
-            background: transparent;
             margin: 0;
             padding: 20px;
             font-family: Arial, sans-serif;
+            background: transparent;
+            overflow: hidden;
         }
 
-        .erfolg {
+        #ueberschrift {
+            position: absolute;
+            top: 10px;
+            left: 40px;
+            font-size: 22px;
+            font-weight: bold;
+            color: white;
+            text-shadow:
+                -1px -1px 0 #000,
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000;
+            z-index: 10;
+        }
+
+        #anzeige {
+            position: absolute;
+            top: 40px;
+            left: 40px;
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
-            max-width: 800px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
 
-        .erfolg img {
+        #anzeige.show {
+            opacity: 1;
+        }
+
+        #anzeige img {
             width: 64px;
             height: 64px;
             margin-right: 15px;
@@ -46,27 +69,49 @@
 </head>
 
 <body>
-    <div id="erfolge"></div>
+    <div id="ueberschrift">Fehlende Erfolge:</div>
+    <div id="anzeige">
+        <img id="icon" src="" />
+        <div class="textblock">
+            <div id="titel" class="titel"></div>
+            <div id="beschreibung" class="beschreibung"></div>
+        </div>
+    </div>
 
     <script>
+        let erfolge = [];
+        let index = 0;
+
         async function ladeErfolge() {
             const res = await fetch('/api/missing-achievements');
             const daten = await res.json();
-            const container = document.getElementById('erfolge');
 
-            container.innerHTML = daten.map(e => `
-        <div class="erfolg">
-          <img src="${e.icon}" />
-          <div class="textblock">
-            <div class="titel">${e.displayName}</div>
-            <div class="beschreibung">${e.description}</div>
-          </div>
-        </div>
-      `).join('');
+            erfolge = daten.reverse(); // Rückwärts durchlaufen
+            index = 0;
+            zeigeNaechsten();
+        }
+
+        function zeigeNaechsten() {
+            if (!erfolge.length) return;
+
+            const erfolg = erfolge[index];
+            document.getElementById('icon').src = erfolg.icon;
+            document.getElementById('titel').textContent = erfolg.displayName;
+            document.getElementById('beschreibung').textContent = erfolg.description;
+
+            const anzeige = document.getElementById('anzeige');
+            anzeige.classList.add('show');
+
+            // Nach 4 Sekunden ausblenden, dann nächsten anzeigen
+            setTimeout(() => {
+                anzeige.classList.remove('show');
+                index = (index + 1) % erfolge.length;
+                setTimeout(zeigeNaechsten, 1000); // 1 Sekunde Pause
+            }, 4000);
         }
 
         ladeErfolge();
-        setInterval(ladeErfolge, 60 * 1000); // Alle 60 Sekunden aktualisieren
+        setInterval(ladeErfolge, 60 * 1000); // Alle 60 Sekunden neu laden
     </script>
 </body>
 
