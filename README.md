@@ -4,8 +4,6 @@ To find your ID use the following pages.
 
 Steam64ID: https://steamid.io
 
-Game ID: Go Steam Shop site -> "https://store.steampowered.com/app/GAME_ID/GAME_NAME/".
-
 You are welcome to customize the HTML yourself and make suggestions.
 
 Browser Source, URL for OBS: http://localhost:3000
