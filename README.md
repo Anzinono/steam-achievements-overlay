@@ -1,4 +1,4 @@
-If you want to use it yourself, you have to enter your Steam64ID, gamId in “.env”.
+If you want to use it yourself, you have to enter your Steam64ID in “.env”.
 
 To find your ID use the following pages.
 
