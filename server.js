@@ -10,7 +10,7 @@ app.use(express.static('public')); // Übergibt statische Dateien aus dem 'publi
 app.get('/api/missing-achievements', async (req, res) => {
     const { STEAM_API_KEY, STEAM_ID } = process.env; // lad die Umgebungsvariablen aus der .env-Datei
     try {
-        // Zuerst: GetPlayerSummaries → um aktuelle gameid zu holen
+        // Zuerst GetPlayerSummaries um aktuelle gameid zu holen
         const summariesRes = await axios.get(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/`, {
             params: {
                 key: STEAM_API_KEY,
@@ -20,7 +20,7 @@ app.get('/api/missing-achievements', async (req, res) => {
 
         // Extrahiere gameid aus dem Spiel, das aktuell läuft
         const player = summariesRes.data.response.players[0];
-        const currentGameID = player?.gameid;
+        const gameID = player.gameid;
 
         /*
         Beispielt Objekt von GetPlayerSummaries:
@@ -52,7 +52,7 @@ app.get('/api/missing-achievements', async (req, res) => {
 }
 */
 
-        if (!currentGameID) {
+        if (!gameID) {
             return res.status(400).json({ error: 'Kein laufendes Spiel gefunden – gameid fehlt.' });
         }
 
@@ -61,13 +61,13 @@ app.get('/api/missing-achievements', async (req, res) => {
                 params: {
                     key: STEAM_API_KEY,
                     steamid: STEAM_ID,
-                    appid: currentGameID,
+                    appid: gameID,
                 }
             }),
             axios.get(`https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/`, {
                 params: {
                     key: STEAM_API_KEY,
-                    appid: currentGameID,
+                    appid: gameID,
                     l: 'german',
                 }
             }),
