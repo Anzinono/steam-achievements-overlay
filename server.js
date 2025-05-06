@@ -22,10 +22,9 @@ app.get('/api/missing-achievements', async (req, res) => {
         const player = summariesRes.data.response.players[0];
         const gameID = player.gameid;
 
-        /*
+/*
         Beispielt Objekt von GetPlayerSummaries:
         https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=89565E8F36B7FA26A2E5B6B42CF6B25B&steamids=76561198209384259
-        {
         "response": {
             "players": [
             {
@@ -45,11 +44,10 @@ app.get('/api/missing-achievements', async (req, res) => {
                 "personastateflags": 0,
                 "gameextrainfo": "Bloons TD 6",
                 "gameid": "960090",
-                "loccountrycode": "DE"
+                "loccountrycode": "DE"9
             }
         ]
     }
-}
 */
 
         if (!gameID) {
